@@ -1,7 +1,6 @@
 (function() {
   // expose control object to global scope
   let terminal = null;
-
   window.snippet_js = {
     evaluate(source, traps, allowed) {
       runInSandbox(source, traps, allowed);
@@ -31,13 +30,9 @@
       },
       {
         has(target, propName) {
-          if (propName in traps) {
-            return true;
-          }
+          if (propName in traps) return true;
 
-          if (propName in allowed) {
-            return false;
-          }
+          if (propName in allowed) return false;
 
           if (propName in window) {
             err(
@@ -48,9 +43,7 @@
             throw 'ERROR USE OF PROTECTED GLOBAL VARIABLES';
           }
 
-          if (propName in target) {
-            return true;
-          }
+          if (propName in target) return true;
 
           // check if var or function variable infected current function's scope
           let searchedVar;
@@ -63,26 +56,17 @@
             throw 'Undeclared variable use Exception';
           }
 
-          if (typeof searchedVar === 'function') {
-            return false;
-          }
+          if (typeof searchedVar === 'function') return false;
 
           return true;
         },
         set(target, propName, value) {
-          if (traps[propName]) {
-            traps[propName] = value;
-          } else {
-            target[propName] = value;
-          }
-
+          if (traps[propName]) traps[propName] = value;
+          else target[propName] = value;
           return true;
         },
         get(target, propName) {
-          if (traps[propName]) {
-            return traps[propName];
-          }
-
+          if (traps[propName]) return traps[propName];
           return target[propName];
         }
       }
@@ -104,13 +88,9 @@
 
     const scope = new Proxy(target, {
       has(target, propName) {
-        if (propName in traps) {
-          return true;
-        }
+        if (propName in traps) return true;
 
-        if (propName in allowed) {
-          return false;
-        }
+        if (propName in allowed) return false;
 
         if (propName in window) {
           err(
@@ -121,9 +101,7 @@
           throw 'ERROR USE OF PROTECTED GLOBAL VARIABLES';
         }
 
-        if (propName in target) {
-          return true;
-        }
+        if (propName in target) return true;
 
         // check if var or function variable infected current function's scope
         let searchedVar;
@@ -136,26 +114,17 @@
           throw 'Undeclared variable use Exception';
         }
 
-        if (typeof searchedVar === 'function') {
-          return false;
-        }
+        if (typeof searchedVar === 'function') return false;
 
         return true;
       },
       set(target, propName, value) {
-        if (traps[propName]) {
-          traps[propName] = value;
-        } else {
-          target[propName] = value;
-        }
-
+        if (traps[propName]) traps[propName] = value;
+        else target[propName] = value;
         return true;
       },
       get(target, propName) {
-        if (traps[propName]) {
-          return traps[propName];
-        }
-
+        if (traps[propName]) return traps[propName];
         return target[propName];
       }
     });

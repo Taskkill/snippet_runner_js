@@ -7,9 +7,14 @@
   <title>SNIPPET</title>
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
+  <!-- snippet runner js -->
   <script src="../main.js"></script>
+  <!-- parallise module -->
+  <script src="./modules/parallise/main.js"></script>
+  <!-- iterallise module -->
+  <script src="./modules/iterallise/main.js"></script>
+  <!-- demo website script -->
   <script src="./script.js"></script>
-
   <link rel="stylesheet" href="./style.css">
 
 
@@ -17,6 +22,46 @@
 
 <body>
   <div id="snippet" contenteditable="true">
+    let it2 = Iterallise(
+    <br>&nbsp;&nbsp;function* gener(input) {
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;while (true) {
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('worker iterallise');
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yield(input++);
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+    <br>&nbsp;&nbsp;}, 4);
+    <br>
+    <br>
+    it2.next().then(res => console.log(res));
+    <br>
+    it2.next().then(res => console.log(res));
+    <br>
+    it2.next().then(res => console.log(res));
+    <br>
+    it2.next().then(res => console.log(res));
+    <br>
+    it2.next().then(res => console.log(res));
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    Parallise(
+    <br>&nbsp;(resolve, reject) => {
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;console.log("look in console");
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;resolve('from worker')}
+      <br>&nbsp;)
+      <br>&nbsp;&nbsp;.then(console.log)
+    <br>
+    <br>
+    console.log('before Parallise');
+    <br>
+    <br>
+    Promise.resolve('what you mate').then(console.log);
+    <br>
+    Promise.resolve('resolved').then(console.log);
+    <br>
+    <br>
     let omen = "Amend";
     <br>function trest () {alert("za trest " + omen);};
     <br>alert("hello world");
@@ -47,35 +92,3 @@
 
 </body>
 </html>
-<!--
-const getCombinePromise = async() =>
-  new Promise(resolve => setTimeout(() => resolve({
-    data: 42
-  }), 500))
-  .then(data => Promise.all([
-    new Promise(resolve => setTimeout(() => resolve({
-      res: 23
-    }), 250)),
-    new Promise(resolve => setTimeout(() => resolve({
-      struct: 55
-    }), 300)),
-    new Promise(resolve => setTimeout(() => resolve({
-      map: "nope string"
-    }), 150)),
-    data
-  ]))
-    .then(arr => ({
-        firstData: arr[0].res,
-        secondData: arr[1].struct,
-        thirdData: arr[2].map,
-        fourthData: arr[3].data,
-    }))
-    .catch(error => console.log(error, "error"));
-
-async function main () {
-    const result = await getCombinePromise();
-    console.log(result, "   THIS IS RESULT!!!   ");
-    console.dir(result);
-}
-
-main() -->
