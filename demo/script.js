@@ -1,5 +1,5 @@
-// user defined function
 function run() {
+  // user defined function
   // const origLog = console.log.bind(console);
   const output = document.getElementById('console-output');
   output.innerHTML = '';
